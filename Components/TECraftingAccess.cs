@@ -13,11 +13,12 @@ namespace MagicStorage.Components
 {
 	public class TECraftingAccess : TEStorageComponent
 	{
-		public Item[] stations = new Item[10];
+		private static int numstations = 20;
+		public Item[] stations = new Item[numstations];
 
 		public TECraftingAccess()
 		{
-			for (int k = 0; k < 10; k++)
+			for (int k = 0; k < numstations; k++)
 			{
 				stations[k] = new Item();
 			}

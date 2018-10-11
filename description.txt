@@ -1,3 +1,4 @@
+*EDITED TO 20 CRAFTING STATIONS
 Are you tired of having a mess of chests in your base? Never remember where you put your items, and have to run across your entire house to get from chest to chest? This mod will solve all of your problems!
 
 This mod offers a solution to storage problems once and for all. It allows you to construct a central network to store all your items, that you can access from one single block. If desired, you can even set up multiple access points to use your storage from anywhere in the world. You can search your storage for items with a certain name, filter by item types, etc. The magic storage can even craft items for you!

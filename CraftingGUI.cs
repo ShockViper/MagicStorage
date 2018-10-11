@@ -203,14 +203,16 @@ namespace MagicStorage
 			stationZone.Width.Set(0f, 1f);
 			stationZone.Top.Set(100f, 0f);
 			stationZone.Height.Set(70f, 0f);
-			stationZone.SetDimensions(numColumns, 1);
+			stationZone.SetDimensions(numColumns, 2);
 			basePanel.Append(stationZone);
 
-			recipeText.Top.Set(152f, 0f);
+			//
+			recipeText.Top.Set(196f, 0f);
 			basePanel.Append(recipeText);
 
 			recipeZone.Width.Set(0f, 1f);
-			recipeZone.Top.Set(176f, 0f);
+			//recipeZone.Top.Set(176f, 0f);
+			recipeZone.Top.Set(216f, 0f);
 			recipeZone.Height.Set(-216f, 1f);
 			basePanel.Append(recipeZone);
 
@@ -229,8 +231,8 @@ namespace MagicStorage
 			recipeZone.Append(scrollBar);
 
 			bottomBar.Width.Set(0f, 1f);
-			bottomBar.Height.Set(32f, 0f);
-			bottomBar.Top.Set(-32f, 1f);
+			bottomBar.Height.Set(20f, 0f);
+			bottomBar.Top.Set(-20f, 1f);
 			basePanel.Append(bottomBar);
 
 			capacityText.Left.Set(6f, 0f);

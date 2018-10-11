@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs
+/bin/Debug
+/obj/Debug
+/MagicStorage.csproj
+/MagicStorage.csproj.user
+/MagicStorage.sln
