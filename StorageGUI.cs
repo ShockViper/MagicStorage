@@ -43,6 +43,8 @@ namespace MagicStorage
 		private static UIElement topBar2;
 		private static UIButtonChoice filterButtons;
 		internal static UISearchBar searchBar2;
+        private static UIElement topBar3;
+        private static UIButtonChoice subFilterButtons;
 
 		private static UISlotZone slotZone = new UISlotZone(HoverItemSlot, GetItem, inventoryScale);
 		private static int slotFocus = -1;
@@ -64,8 +66,10 @@ namespace MagicStorage
 
 		private static UIElement bottomBar = new UIElement();
 		private static UIText capacityText;
+        private static FilterMode filterMode;
+        private static FilterMode oldFilterMode;
 
-		public static void Initialize()
+        public static void Initialize()
 		{
 			InitLangStuff();
 			float itemSlotWidth = Main.inventoryBackTexture.Width * inventoryScale;
@@ -118,9 +122,19 @@ namespace MagicStorage
 			searchBar2.Height.Set(0f, 1f);
 			topBar2.Append(searchBar2);
 
-			slotZone.Width.Set(0f, 1f);
-			slotZone.Top.Set(76f, 0f);
-			slotZone.Height.Set(-116f, 1f);
+            topBar3 = new UIElement();
+            topBar3.Width.Set(0f, 1f);
+            topBar3.Height.Set(32f, 0f);
+            topBar3.Top.Set(72f, 0f);
+            basePanel.Append(topBar3);
+
+            InitSubFilterButtons();
+            topBar3.Append(subFilterButtons);
+
+
+            slotZone.Width.Set(0f, 1f);
+			slotZone.Top.Set(108f, 0f);
+			slotZone.Height.Set(-112f, 1f);
 			basePanel.Append(slotZone);
 
 			numRows = (items.Count + numColumns - 1) / numColumns;
@@ -187,6 +201,7 @@ namespace MagicStorage
 		{
 			sortButtons = null;
 			filterButtons = null;
+            subFilterButtons = null;
 		}
 
 		private static void InitSortButtons()
@@ -237,7 +252,118 @@ namespace MagicStorage
 			}
 		}
 
-		public static void Update(GameTime gameTime)
+        private static void InitSubFilterButtons()
+        {
+            if (subFilterButtons == null)
+            {
+                subFilterButtons = new UIButtonChoice(new Texture2D[]
+                {
+                    MagicStorage.Instance.GetTexture("FilterAll"),
+                },
+                new LocalizedText[]
+                {
+                    Language.GetText("Mods.MagicStorage.FilterAll"),
+                });
+            }
+        }
+
+        private static void UpdateSubFilterButtons()
+        {
+            //subFilterButtons = null;
+            if (subFilterButtons != null)
+            {
+                switch (filterMode)
+                {
+                    case FilterMode.All:
+                        subFilterButtons.UpdateButtons(new Texture2D[]
+                        {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                        });
+                        break;
+                    case FilterMode.Weapons:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterMelee"),
+                            MagicStorage.Instance.GetTexture("FilterRanged"),
+                            MagicStorage.Instance.GetTexture("FilterMagic"),
+                            MagicStorage.Instance.GetTexture("FilterSummon"),
+                            MagicStorage.Instance.GetTexture("FilterThrowing"),
+                            MagicStorage.Instance.GetTexture("FilterOtherWeapon"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterMelee"),
+                            Language.GetText("Mods.MagicStorage.FilterRanged"),
+                            Language.GetText("Mods.MagicStorage.FilterMagic"),
+                            Language.GetText("Mods.MagicStorage.FilterSummon"),
+                            Language.GetText("Mods.MagicStorage.FilterThrowing"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherWeapons")
+                         });
+                        break;
+                    case FilterMode.Tools:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterAxe"),
+                            MagicStorage.Instance.GetTexture("FilterHammer"),
+                            MagicStorage.Instance.GetTexture("FilterPickaxe"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterAxe"),
+                            Language.GetText("Mods.MagicStorage.FilterHammer"),
+                            Language.GetText("Mods.MagicStorage.FilterPickaxe"),
+                         });
+                        break;
+                    case FilterMode.Equipment:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterArmor"),
+                            MagicStorage.Instance.GetTexture("FilterAccessory"),
+                            MagicStorage.Instance.GetTexture("FilterGrapple"),
+                            MagicStorage.Instance.GetTexture("FilterMount"),
+                            MagicStorage.Instance.GetTexture("FilterPet"),
+                            MagicStorage.Instance.GetTexture("FilterDye"),
+                            MagicStorage.Instance.GetTexture("FilterVanity"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterArmor"),
+                            Language.GetText("Mods.MagicStorage.FilterAccessory"),
+                            Language.GetText("Mods.MagicStorage.FilterGrapple"),
+                            Language.GetText("Mods.MagicStorage.FilterMount"),
+                            Language.GetText("Mods.MagicStorage.FilterPet"),
+                            Language.GetText("Mods.MagicStorage.FilterDye"),
+                            Language.GetText("Mods.MagicStorage.FilterVanity"),
+                         });
+                        break;
+
+                    default:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                        {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                        });
+                        break;
+
+                }
+
+            }
+        }
+
+        public static void Update(GameTime gameTime)
 		{
 			oldMouse = curMouse;
 			curMouse = Mouse.GetState();
@@ -275,6 +401,7 @@ namespace MagicStorage
 			slotZone.DrawText();
 			sortButtons.DrawText();
 			filterButtons.DrawText();
+            subFilterButtons.DrawText();
 		}
 
 		private static Item GetItem(int slot, ref int context)
@@ -352,6 +479,7 @@ namespace MagicStorage
 			InitLangStuff();
 			InitSortButtons();
 			InitFilterButtons();
+            InitSubFilterButtons();
 			SortMode sortMode;
 			switch (sortButtons.Choice)
 			{
@@ -371,7 +499,6 @@ namespace MagicStorage
 				sortMode = SortMode.Default;
 				break;
 			}
-			FilterMode filterMode;
 			switch (filterButtons.Choice)
 			{
 			case 0:
@@ -399,7 +526,14 @@ namespace MagicStorage
 				filterMode = FilterMode.All;
 				break;
 			}
-			items.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), sortMode, filterMode, searchBar2.Text, searchBar.Text));
+            if (filterMode != oldFilterMode)
+            {
+                UpdateSubFilterButtons();
+                oldFilterMode = filterMode;
+            }
+            SubFilterMode subFilterMode;
+            subFilterMode = (SubFilterMode) subFilterButtons.Choice;
+			items.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), sortMode, filterMode, subFilterMode, searchBar2.Text, searchBar.Text));
 			for (int k = 0; k < items.Count; k++)
 			{
 				didMatCheck.Add(false);

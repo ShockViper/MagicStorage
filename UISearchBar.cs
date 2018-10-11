@@ -83,6 +83,11 @@ namespace MagicStorage
 					cursorPosition = text.Length;
 					CheckBlockInput();
 				}
+				else if (StorageGUI.curMouse.RightButton == ButtonState.Pressed && StorageGUI.oldMouse.RightButton == ButtonState.Released && mouseOver)
+				{
+					text = string.Empty;
+					cursorPosition = 0;
+				}
 			}
 
 			if (hasFocus)

@@ -7,7 +7,7 @@ namespace MagicStorage.Sorting
 {
 	public static class ItemSorter
 	{
-		public static IEnumerable<Item> SortAndFilter(IEnumerable<Item> items, SortMode sortMode, FilterMode filterMode, string modFilter, string nameFilter)
+		public static IEnumerable<Item> SortAndFilter(IEnumerable<Item> items, SortMode sortMode, FilterMode filterMode,SubFilterMode subFilterMode, string modFilter, string nameFilter)
 		{
 			ItemFilter filter;
 			switch (filterMode)
@@ -16,13 +16,13 @@ namespace MagicStorage.Sorting
 				filter = new FilterAll();
 				break;
 			case FilterMode.Weapons:
-				filter = new FilterWeapon();
+				filter = GetWeaponFilter(subFilterMode);
 				break;
 			case FilterMode.Tools:
-				filter = new FilterTool();
-				break;
+				filter = GetToolFilter(subFilterMode);
+                    break;
 			case FilterMode.Equipment:
-				filter = new FilterEquipment();
+				filter = GetEquipmentFilter(subFilterMode);
 				break;
 			case FilterMode.Potions:
 				filter = new FilterPotion();
@@ -131,7 +131,101 @@ namespace MagicStorage.Sorting
 			return sortedTree.GetSortedItems();
 		}
 
-		private static bool FilterName(Item item, string modFilter, string filter)
+        private static ItemFilter GetWeaponFilter(SubFilterMode subFilterMode)
+        {
+            ItemFilter filter;
+            switch (subFilterMode)
+            {
+                case SubFilterMode.All:
+                    filter = new FilterWeapon();
+                    break;
+                case SubFilterMode.Melee:
+                    filter = new FilterMelee();
+                    break;
+                case SubFilterMode.Ranged:
+                    filter = new FilterRanged();
+                    break;
+                case SubFilterMode.Magic:
+                    filter = new FilterMagic();
+                    break;
+                case SubFilterMode.Throwing:
+                    filter = new FilterThrown();
+                    break;
+                case SubFilterMode.Summon:
+                    filter = new FilterSummon();
+                    break;
+                case SubFilterMode.OtherWeapons:
+                    filter = new FilterOtherWeapon();
+                    break;
+                default:
+                    filter = new FilterWeapon();
+                    break;
+            }
+            return filter;
+        }
+
+        private static ItemFilter GetToolFilter(SubFilterMode subFilterMode)
+        {
+            ItemFilter filter;
+            switch (subFilterMode)
+            {
+                case SubFilterMode.All:
+                    filter = new FilterTool();
+                    break;
+                case SubFilterMode.Axe:
+                    filter = new FilterAxe();
+                    break;
+                case SubFilterMode.Hammer:
+                    filter = new FilterHammer();
+                    break;
+                case SubFilterMode.Pickaxe:
+                    filter = new FilterPickaxe();
+                    break;
+                default:
+                    filter = new FilterTool();
+                    break;
+            }
+            return filter;
+        }
+
+        private static ItemFilter GetEquipmentFilter(SubFilterMode subFilterMode)
+        {
+            ItemFilter filter;
+            switch (subFilterMode)
+            {
+                case SubFilterMode.All:
+                    filter = new FilterEquipment();
+                    break;
+                case SubFilterMode.Armor:
+                    filter = new FilterArmor();
+                    break;
+                case SubFilterMode.Accessory:
+                    filter = new FilterAccessory();
+                    break;
+                case SubFilterMode.Graple:
+                    filter = new FilterGrapple();
+                    break;
+                case SubFilterMode.Mount:
+                    filter = new FilterMount();
+                    break;
+                case SubFilterMode.Pet:
+                    filter = new FilterPet();
+                    break;
+                case SubFilterMode.Dye:
+                    filter = new FilterDye();
+                    break;
+                case SubFilterMode.Vanity:
+                    filter = new FilterVanityArmor();
+                    break;
+                default:
+                    filter = new FilterEquipment();
+                    break;
+            }
+            return filter;
+        }
+
+
+        private static bool FilterName(Item item, string modFilter, string filter)
 		{
 			string modName = "Terraria";
 			if (item.modItem != null)

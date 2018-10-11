@@ -126,7 +126,63 @@ namespace MagicStorage.Sorting
 		}
 	}
 
-	public class FilterPotion : ItemFilter
+    public class FilterArmor : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return (item.headSlot >= 0 || item.bodySlot >= 0 || item.legSlot >= 0) && !item.vanity;
+        }
+    }
+
+    public class FilterVanityArmor : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return (item.headSlot >= 0 || item.bodySlot >= 0 || item.legSlot >= 0) && item.vanity;
+        }
+    }
+
+    public class FilterAccessory : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.accessory;
+        }
+    }
+
+    public class FilterGrapple : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return Main.projHook[item.shoot];
+        }
+    }
+
+    public class FilterMount : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.mountType != -1 ;
+        }
+    }
+
+    public class FilterPet : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.buffType > 0 && (Main.lightPet[item.buffType] || Main.vanityPet[item.buffType]);
+        }
+    }
+
+    public class FilterDye : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.dye > 0 || item.hairDye >= 0;
+        }
+    }
+
+    public class FilterPotion : ItemFilter
 	{
 		public override bool Passes(Item item)
 		{

@@ -42,7 +42,25 @@ namespace MagicStorage
 			this.MinHeight.Set(buttonSize, 0f);
 		}
 
-		public override void Update(GameTime gameTime)
+        public void UpdateButtons(Texture2D[] buttons, LocalizedText[] names)
+        {
+            if (buttons.Length != names.Length || buttons.Length == 0)
+            {
+                throw new ArgumentException();
+            }
+            this.buttons = buttons;
+            this.names = names;
+            this.choice = 0;
+            int width = buttonSize * buttons.Length + buttonPadding * (buttons.Length - 1);
+            this.Width.Set(width, 0f);
+            this.MinWidth.Set(width, 0f);
+            this.Height.Set(buttonSize, 0f);
+            this.MinHeight.Set(buttonSize, 0f);
+
+        }
+
+
+        public override void Update(GameTime gameTime)
 		{
 			int oldChoice = choice;
 			if (StorageGUI.MouseClicked && Parent != null)

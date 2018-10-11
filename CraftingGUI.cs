@@ -753,7 +753,7 @@ namespace MagicStorage
 			{
 				return;
 			}
-			items.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), SortMode.Id, FilterMode.All, "", ""));
+			items.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), SortMode.Id, FilterMode.All, SubFilterMode.All, "", ""));
 			AnalyzeIngredients();
 			InitLangStuff();
 			InitSortButtons();

@@ -126,21 +126,89 @@ namespace MagicStorage
 			text.AddTranslation(GameCulture.Spanish, "Filtrar por armas");
 			AddTranslation(text);
 
-			text = CreateTranslation("FilterTools");
+            text = CreateTranslation("FilterAllWeapons");
+            text.SetDefault("All Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterMelee");
+            text.SetDefault("Melee Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterRanged");
+            text.SetDefault("Ranged Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterMagic");
+            text.SetDefault("Magic Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterSummon");
+            text.SetDefault("Summon Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterThrowing");
+            text.SetDefault("Throwing Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterOtherWeapons");
+            text.SetDefault("Other Weapons");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterTools");
 			text.SetDefault("Filter Tools");
 			text.AddTranslation(GameCulture.Russian, "Фильтр (Инструменты)");
 			text.AddTranslation(GameCulture.French, "Filtrer par outils");
 			text.AddTranslation(GameCulture.Spanish, "Filtrar por herramientas");
 			AddTranslation(text);
 
-			text = CreateTranslation("FilterEquips");
+            text = CreateTranslation("FilterAxe");
+            text.SetDefault("Axes");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterHammer");
+            text.SetDefault("Hammers");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterPickaxe");
+            text.SetDefault("Pickaxes");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterEquips");
 			text.SetDefault("Filter Equipment");
 			text.AddTranslation(GameCulture.Russian, "Фильтр (Снаряжения)");
 			text.AddTranslation(GameCulture.French, "Filtrer par Équipement");
 			text.AddTranslation(GameCulture.Spanish, "Filtrar por equipamiento");
 			AddTranslation(text);
 
-			text = CreateTranslation("FilterPotions");
+            text = CreateTranslation("FilterArmor");
+            text.SetDefault("Armor");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterAccessory");
+            text.SetDefault("Accessory");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterGrapple");
+            text.SetDefault("Graple Hooks");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterMount");
+            text.SetDefault("Mounts");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterPet");
+            text.SetDefault("Pets");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterDye");
+            text.SetDefault("Dyes");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterVanity");
+            text.SetDefault("Vanity Items");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterPotions");
 			text.SetDefault("Filter Potions");
 			text.AddTranslation(GameCulture.Russian, "Фильтр (Зелья)");
 			text.AddTranslation(GameCulture.French, "Filtrer par potions");
