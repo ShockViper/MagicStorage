@@ -142,6 +142,14 @@ namespace MagicStorage.Sorting
         }
     }
 
+    public class FilterVanityItems : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.vanity;
+        }
+    }
+
     public class FilterAccessory : ItemFilter
     {
         public override bool Passes(Item item)

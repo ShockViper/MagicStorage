@@ -215,7 +215,7 @@ namespace MagicStorage.Sorting
                     filter = new FilterDye();
                     break;
                 case SubFilterMode.Vanity:
-                    filter = new FilterVanityArmor();
+                    filter = new FilterVanityItems();
                     break;
                 default:
                     filter = new FilterEquipment();

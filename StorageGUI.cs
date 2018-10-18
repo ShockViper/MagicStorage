@@ -68,6 +68,7 @@ namespace MagicStorage
 		private static UIText capacityText;
         private static FilterMode filterMode;
         private static FilterMode oldFilterMode;
+        private static int numItemsShown=0;
 
         public static void Initialize()
 		{
@@ -173,7 +174,7 @@ namespace MagicStorage
 					}
 				}
 			}
-			capacityText.SetText(numItems + "/" + capacity + " Items");
+			capacityText.SetText(numItems + "/" + capacity + " Items" + " (shown:"+numItemsShown + ")");
 			bottomBar.Append(capacityText);
 		}
 
@@ -534,6 +535,7 @@ namespace MagicStorage
             SubFilterMode subFilterMode;
             subFilterMode = (SubFilterMode) subFilterButtons.Choice;
 			items.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), sortMode, filterMode, subFilterMode, searchBar2.Text, searchBar.Text));
+            numItemsShown = items.Count;
 			for (int k = 0; k < items.Count; k++)
 			{
 				didMatCheck.Add(false);
