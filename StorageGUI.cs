@@ -153,8 +153,8 @@ namespace MagicStorage
 			slotZone.Append(scrollBar);
 
 			bottomBar.Width.Set(0f, 1f);
-			bottomBar.Height.Set(32f, 0f);
-			bottomBar.Top.Set(-32f, 1f);
+			bottomBar.Height.Set(16f, 0f);
+			bottomBar.Top.Set(-16f, 1f);
 			basePanel.Append(bottomBar);
 
 			capacityText.Left.Set(6f, 0f);
@@ -370,21 +370,25 @@ namespace MagicStorage
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
                             MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterMaterial"),
+                            MagicStorage.Instance.GetTexture("FilterTile"),
                             MagicStorage.Instance.GetTexture("FilterOre"),
+                            MagicStorage.Instance.GetTexture("FilterRoomNeeds"),
                             MagicStorage.Instance.GetTexture("FilterStatue"),
                             MagicStorage.Instance.GetTexture("FilterBanner"),
                             MagicStorage.Instance.GetTexture("FilterCrate"),
+                            MagicStorage.Instance.GetTexture("FilterMaterial"),
                             MagicStorage.Instance.GetTexture("FilterOtherPlaceables"),
                         },
                         new LocalizedText[]
                         {
                             Language.GetText("Mods.MagicStorage.FilterAll"),
-                            Language.GetText("Mods.MagicStorage.FilterMaterial"),
+                            Language.GetText("Mods.MagicStorage.FilterBlock"),
                             Language.GetText("Mods.MagicStorage.FilterOre"),
+                            Language.GetText("Mods.MagicStorage.FilterRoomNeeds"),
                             Language.GetText("Mods.MagicStorage.FilterStatue"),
                             Language.GetText("Mods.MagicStorage.FilterBanner"),
                             Language.GetText("Mods.MagicStorage.FilterCrate"),
+                            Language.GetText("Mods.MagicStorage.FilterMaterial"),
                             Language.GetText("Mods.MagicStorage.FilterOtherPlaceables"),
                          });
                         break;

@@ -35,11 +35,13 @@ namespace MagicStorage.Sorting
         Food=2,
         Buff=3,
         OtherPotions=4,
-        Material=1,
-        Ore=2,
-        Statue=3,
-        Banner=4,
-        Crate=5,
+        Block = 1,
+        Ore = 2,
+        RoomNeeds=3,
+        Statue=4,
+        Banner=5,
+        Crate=6,
+        Material = 7,
         OtherPlaceables
     }
 }

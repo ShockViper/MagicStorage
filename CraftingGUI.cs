@@ -49,8 +49,10 @@ namespace MagicStorage
 		private static UIElement topBar2;
 		private static UIButtonChoice filterButtons;
 		internal static UISearchBar searchBar2;
+        private static UIElement topBar3;
+        private static UIButtonChoice subFilterButtons;
 
-		private static UIText stationText;
+        private static UIText stationText;
 		private static UISlotZone stationZone = new UISlotZone(HoverStation, GetStation, inventoryScale);
 		private static UIText recipeText;
 		private static UISlotZone recipeZone = new UISlotZone(HoverRecipe, GetRecipe, inventoryScale);
@@ -120,7 +122,10 @@ namespace MagicStorage
 		internal static bool threadNeedsRestart = false;
 		private static SortMode threadSortMode;
 		private static FilterMode threadFilterMode;
-		private static List<Recipe> threadRecipes = new List<Recipe>();
+        private static SubFilterMode threadSubFilterMode;
+        private static FilterMode filterMode;
+        private static FilterMode oldFilterMode;
+        private static List<Recipe> threadRecipes = new List<Recipe>();
 		private static List<bool> threadRecipeAvailable = new List<bool>();
 		private static List<Recipe> nextRecipes = new List<Recipe>();
 		private static List<bool> nextRecipeAvailable = new List<bool>();
@@ -197,23 +202,32 @@ namespace MagicStorage
 			searchBar2.Height.Set(0f, 1f);
 			topBar2.Append(searchBar2);
 
-			stationText.Top.Set(76f, 0f);
+            topBar3 = new UIElement();
+            topBar3.Width.Set(0f, 1f);
+            topBar3.Height.Set(32f, 0f);
+            topBar3.Top.Set(72f, 0f);
+            basePanel.Append(topBar3);
+
+            InitSubFilterButtons();
+            topBar3.Append(subFilterButtons);
+
+            stationText.Top.Set(108f, 0f);
 			basePanel.Append(stationText);
 
 			stationZone.Width.Set(0f, 1f);
-			stationZone.Top.Set(100f, 0f);
+			stationZone.Top.Set(132f, 0f);
 			stationZone.Height.Set(70f, 0f);
 			stationZone.SetDimensions(numColumns, 2);
 			basePanel.Append(stationZone);
 
 			//
-			recipeText.Top.Set(196f, 0f);
+			recipeText.Top.Set(228f, 0f);
 			basePanel.Append(recipeText);
 
 			recipeZone.Width.Set(0f, 1f);
 			//recipeZone.Top.Set(176f, 0f);
-			recipeZone.Top.Set(216f, 0f);
-			recipeZone.Height.Set(-216f, 1f);
+			recipeZone.Top.Set(248f, 0f);
+			recipeZone.Height.Set(-248f, 1f);
 			basePanel.Append(recipeZone);
 
 			numRows = (recipes.Count + numColumns - 1) / numColumns;
@@ -423,7 +437,163 @@ namespace MagicStorage
 			}
 		}
 
-		public static void Update(GameTime gameTime)
+        private static void InitSubFilterButtons()
+        {
+            if (subFilterButtons == null)
+            {
+                subFilterButtons = new UIButtonChoice(new Texture2D[]
+                {
+                    MagicStorage.Instance.GetTexture("FilterAll"),
+                },
+                new LocalizedText[]
+                {
+                    Language.GetText("Mods.MagicStorage.FilterAll"),
+                });
+            }
+        }
+
+        private static void UpdateSubFilterButtons()
+        {
+            //subFilterButtons = null;
+            if (subFilterButtons != null)
+            {
+                switch (filterMode)
+                {
+                    case FilterMode.All:
+                        subFilterButtons.UpdateButtons(new Texture2D[]
+                        {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                        });
+                        break;
+                    case FilterMode.Weapons:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterMelee"),
+                            MagicStorage.Instance.GetTexture("FilterRanged"),
+                            MagicStorage.Instance.GetTexture("FilterMagic"),
+                            MagicStorage.Instance.GetTexture("FilterSummon"),
+                            MagicStorage.Instance.GetTexture("FilterThrowing"),
+                            MagicStorage.Instance.GetTexture("FilterOtherWeapon"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterMelee"),
+                            Language.GetText("Mods.MagicStorage.FilterRanged"),
+                            Language.GetText("Mods.MagicStorage.FilterMagic"),
+                            Language.GetText("Mods.MagicStorage.FilterSummon"),
+                            Language.GetText("Mods.MagicStorage.FilterThrowing"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherWeapons")
+                         });
+                        break;
+                    case FilterMode.Tools:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterAxe"),
+                            MagicStorage.Instance.GetTexture("FilterHammer"),
+                            MagicStorage.Instance.GetTexture("FilterPickaxe"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterAxe"),
+                            Language.GetText("Mods.MagicStorage.FilterHammer"),
+                            Language.GetText("Mods.MagicStorage.FilterPickaxe"),
+                         });
+                        break;
+                    case FilterMode.Equipment:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterArmor"),
+                            MagicStorage.Instance.GetTexture("FilterAccessory"),
+                            MagicStorage.Instance.GetTexture("FilterGrapple"),
+                            MagicStorage.Instance.GetTexture("FilterMount"),
+                            MagicStorage.Instance.GetTexture("FilterPet"),
+                            MagicStorage.Instance.GetTexture("FilterDye"),
+                            MagicStorage.Instance.GetTexture("FilterVanity"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterArmor"),
+                            Language.GetText("Mods.MagicStorage.FilterAccessory"),
+                            Language.GetText("Mods.MagicStorage.FilterGrapple"),
+                            Language.GetText("Mods.MagicStorage.FilterMount"),
+                            Language.GetText("Mods.MagicStorage.FilterPet"),
+                            Language.GetText("Mods.MagicStorage.FilterDye"),
+                            Language.GetText("Mods.MagicStorage.FilterVanity"),
+                         });
+                        break;
+                    case FilterMode.Potions:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterRecovery"),
+                            MagicStorage.Instance.GetTexture("FilterFood"),
+                            MagicStorage.Instance.GetTexture("FilterBuff"),
+                            MagicStorage.Instance.GetTexture("FilterOtherPotions"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterRecovery"),
+                            Language.GetText("Mods.MagicStorage.FilterFood"),
+                            Language.GetText("Mods.MagicStorage.FilterBuff"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherPotions"),
+                         });
+                        break;
+
+                    case FilterMode.Placeables:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterTile"),
+                            MagicStorage.Instance.GetTexture("FilterOre"),
+                            MagicStorage.Instance.GetTexture("FilterRoomNeeds"),
+                            MagicStorage.Instance.GetTexture("FilterStatue"),
+                            MagicStorage.Instance.GetTexture("FilterBanner"),
+                            MagicStorage.Instance.GetTexture("FilterCrate"),
+                            MagicStorage.Instance.GetTexture("FilterMaterial"),
+                            MagicStorage.Instance.GetTexture("FilterOtherPlaceables"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterBlock"),
+                            Language.GetText("Mods.MagicStorage.FilterOre"),
+                            Language.GetText("Mods.MagicStorage.FilterRoomNeeds"),
+                            Language.GetText("Mods.MagicStorage.FilterStatue"),
+                            Language.GetText("Mods.MagicStorage.FilterBanner"),
+                            Language.GetText("Mods.MagicStorage.FilterCrate"),
+                            Language.GetText("Mods.MagicStorage.FilterMaterial"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherPlaceables"),
+                         });
+                        break;
+
+                    default:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                        {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                        });
+                        break;
+
+                }
+
+            }
+        }
+
+        public static void Update(GameTime gameTime)
 		{try{
 			oldMouse = StorageGUI.oldMouse;
 			curMouse = StorageGUI.curMouse;
@@ -477,7 +647,9 @@ namespace MagicStorage
 			resultZone.DrawText();
 			sortButtons.DrawText();
 			recipeButtons.DrawText();
-			filterButtons.DrawText();}catch(Exception e){Main.NewTextMultiline(e.ToString());}
+			filterButtons.DrawText();
+                subFilterButtons.DrawText();
+            } catch(Exception e){Main.NewTextMultiline(e.ToString());}
 		}
 
 		private static Item GetStation(int slot, ref int context)
@@ -759,6 +931,7 @@ namespace MagicStorage
 			InitSortButtons();
 			InitRecipeButtons();
 			InitFilterButtons();
+            InitSubFilterButtons();
 			SortMode sortMode;
 			switch (sortButtons.Choice)
 			{
@@ -775,7 +948,7 @@ namespace MagicStorage
 				sortMode = SortMode.Default;
 				break;
 			}
-			FilterMode filterMode;
+			//FilterMode filterMode;
 			switch (filterButtons.Choice)
 			{
 			case 0:
@@ -803,12 +976,21 @@ namespace MagicStorage
 				filterMode = FilterMode.All;
 				break;
 			}
-			RefreshStorageItems();
+            if (filterMode != oldFilterMode)
+            {
+                UpdateSubFilterButtons();
+                oldFilterMode = filterMode;
+            }
+            SubFilterMode subFilterMode;
+            subFilterMode = (SubFilterMode)subFilterButtons.Choice;
+
+            RefreshStorageItems();
 			lock (threadLock)
 			{
 				threadNeedsRestart = true;
 				threadSortMode = sortMode;
 				threadFilterMode = filterMode;
+                threadSubFilterMode = subFilterMode;
 				if (!threadRunning)
 				{
 					threadRunning = true;
@@ -824,13 +1006,15 @@ namespace MagicStorage
 			{try{
 				SortMode sortMode;
 				FilterMode filterMode;
+                SubFilterMode subFilterMode;
 				lock (threadLock)
 				{
 					threadNeedsRestart = false;
 					sortMode = threadSortMode;
 					filterMode = threadFilterMode;
+                    subFilterMode = threadSubFilterMode;
 				}
-				var temp = ItemSorter.GetRecipes(sortMode, filterMode, searchBar2.Text, searchBar.Text);
+				var temp = ItemSorter.GetRecipes(sortMode, filterMode, subFilterMode, searchBar2.Text, searchBar.Text);
 				threadRecipes.Clear();
 				threadRecipeAvailable.Clear();
 				try

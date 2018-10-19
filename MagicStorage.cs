@@ -40,56 +40,99 @@ namespace MagicStorage
 			CraftingGUI.Unload();
 		}
 
-        public class ItemTooltips : GlobalItem
-        {
-            private static List<string> strings = new List<string> { };
-            public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-            {
-                var modLoaderMod = ModLoader.GetMod("ModLoader");
-                if (item.modItem != null && !item.Name.Contains("[" + item.modItem.mod.Name + "]") && !item.Name.Contains("[" + item.modItem.mod.DisplayName + "]"))
-                {
-                    string text = (item.modItem.mod.Name + ":" + item.modItem.Name);
-                    var line1 = new TooltipLine(mod, mod.Name, "[" + text + "]");
-                    line1.overrideColor = Colors.RarityBlue;
-                    tooltips.Add(line1);
-                }
-                strings.Clear();
-                //strings.Add("life:" + item.healLife);
-                //strings.Add("mana:" + item.healMana);
-                strings.Add("manaincrease:" + item.manaIncrease);
-                //strings.Add("magic:" + item.magic);
-                strings.Add("material:" + item.material);
-                strings.Add("placestyle:" + item.placeStyle);
-                //strings.Add("type:" + item.type);
-                strings.Add("bufftype:" + item.buffType);
-                //strings.Add("potion:" + item.potion);
-                strings.Add("consumable:" + item.consumable);
-                strings.Add("Affixname:" + item.AffixName());
-                strings.Add("ammo:" + item.ammo);
-                strings.Add("checkmat:" + item.checkMat());
-                strings.Add("DD2Summon:" + item.DD2Summon);
-                strings.Add("makeNPC:" + item.makeNPC);
-                strings.Add("sentry:" + item.sentry);
-                strings.Add("createTile:" + item.createTile);
-                strings.Add("createwall:" + item.createWall);
-                strings.Add("bossSpawn:" + ItemID.Sets.SortingPriorityBossSpawns[item.type]);
-                strings.Add("extractibles:" + ItemID.Sets.SortingPriorityExtractibles[item.type]);
-                strings.Add("IsAMaterial:" + ItemID.Sets.IsAMaterial[item.type]);
-                strings.Add("materials:" + ItemID.Sets.SortingPriorityMaterials[item.type]);
-                strings.Add("painting:" + ItemID.Sets.SortingPriorityPainting[item.type]);
-                strings.Add("terraforming:" + ItemID.Sets.SortingPriorityTerraforming[item.type]);
-                strings.Add("wiring:" + ItemID.Sets.SortingPriorityWiring[item.type]);
-                strings.Add("ropes:" + ItemID.Sets.SortingPriorityRopes[item.type]);
-                strings.Add("Animate as Soul:" + ItemID.Sets.AnimatesAsSoul[item.type]);
-                foreach (var str in strings)
-                {
-                    var line = new TooltipLine(mod, mod.Name, str);
-                    line.overrideColor = Colors.RarityOrange;
-                    tooltips.Add(line);
-                }
+        //public class ItemTooltips : GlobalItem
+        //{
+        //    private static List<string> strings = new List<string> { };
+        //    public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        //    {
+        //        var modLoaderMod = ModLoader.GetMod("ModLoader");
+        //        if (item.modItem != null && !item.Name.Contains("[" + item.modItem.mod.Name + "]") && !item.Name.Contains("[" + item.modItem.mod.DisplayName + "]"))
+        //        {
+        //            string text = (item.modItem.mod.Name + ":" + item.modItem.Name);
+        //            var line1 = new TooltipLine(mod, mod.Name, "[" + text + "]");
+        //            line1.overrideColor = Colors.RarityBlue;
+        //            tooltips.Add(line1);
+        //        }
+        //        strings.Clear();
+        //        ////strings.add("life:" + item.heallife);
+        //        ////strings.add("mana:" + item.healmana);
+        //        ////strings.add("manaincrease:" + item.manaincrease);
+        //        ////strings.add("magic:" + item.magic);
+        //        ////strings.add("material:" + item.material);
+        //        ////strings.add("placestyle:" + item.placestyle);
+        //        ////strings.add("type:" + item.type);
+        //        //strings.add("bufftype:" + item.bufftype);
+        //        ////strings.add("potion:" + item.potion);
+        //        //strings.add("consumable:" + item.consumable);
+        //        //strings.add("affixname:" + item.affixname());
+        //        //strings.add("ammo:" + item.ammo);
+        //        //strings.add("checkmat:" + item.checkmat());
+        //        //strings.add("dd2summon:" + item.dd2summon);
+        //        //strings.add("makenpc:" + item.makenpc);
+        //        //strings.add("sentry:" + item.sentry);
+        //        //strings.add("createtile:" + item.createtile);
+        //        //strings.add("createwall:" + item.createwall);
+        //        //strings.add("item:" + item.tostring());
+        //        //strings.add("bossspawn:" + itemid.sets.sortingprioritybossspawns[item.type]);
+        //        //strings.add("extractibles:" + itemid.sets.sortingpriorityextractibles[item.type]);
+        //        //strings.add("isamaterial:" + itemid.sets.isamaterial[item.type]);
+        //        //strings.add("materials:" + itemid.sets.sortingprioritymaterials[item.type]);
+        //        //strings.add("painting:" + itemid.sets.sortingprioritypainting[item.type]);
+        //        //strings.add("terraforming:" + itemid.sets.sortingpriorityterraforming[item.type]);
+        //        //strings.add("wiring:" + itemid.sets.sortingprioritywiring[item.type]);
+        //        //strings.add("ropes:" + itemid.sets.sortingpriorityropes[item.type]);
+        //        //strings.add("animate as soul:" + itemid.sets.animatesassoul[item.type]);
+        //        if (item.createTile !=-1)
+        //            {
+        //            if (TileID.Sets.Ore[item.createTile]) { strings.Add("Ore"); }
+        //            if (TileID.Sets.AvoidedByNPCs[item.createTile]) { strings.Add("AvoidedByNPCs"); }
+        //            if (TileID.Sets.GeneralPlacementTiles[item.createTile]) { strings.Add("GeneralPlacement"); }
+        //            if (TileID.Sets.BasicChest[item.createTile]) { strings.Add("BasicChest"); }
+        //            if (TileID.Sets.BasicChestFake[item.createTile]) { strings.Add("BasicChestFake"); }
+        //            if (TileID.Sets.BlocksStairs[item.createTile]) { strings.Add("BlocksStairs"); }
+        //            if (TileID.Sets.BlocksStairsAbove[item.createTile]) { strings.Add("BlocksStairsAbove"); }
+        //            if (TileID.Sets.Corrupt[item.createTile]) { strings.Add("Corrupt"); }
+        //            if (TileID.Sets.Crimson[item.createTile]) { strings.Add("Crimson"); }
+        //            if (TileID.Sets.DrawsWalls[item.createTile]) { strings.Add("DrawsWalls"); }
+        //            if (TileID.Sets.Falling[item.createTile]) { strings.Add("Falling"); }
+        //            if (TileID.Sets.Grass[item.createTile]) { strings.Add("Grass"); }
+        //            if (TileID.Sets.GrassSpecial[item.createTile]) { strings.Add("GrassSpecial"); }
+        //            if (TileID.Sets.Hallow[item.createTile]) { strings.Add("Hallow"); }
+        //            if (TileID.Sets.HellSpecial[item.createTile]) { strings.Add("HellSpecial"); }
+        //            if (TileID.Sets.HousingWalls[item.createTile]) { strings.Add("HousingWalls"); }
+        //            if (TileID.Sets.Ices[item.createTile]) { strings.Add("Ices"); }
+        //            if (TileID.Sets.InteractibleByNPCs[item.createTile]) { strings.Add("InteractibleByNPCs"); }
+        //            if (TileID.Sets.JungleSpecial[item.createTile]) { strings.Add("JungleSpecial"); }
+        //            if (TileID.Sets.Leaves[item.createTile]) { strings.Add("Leaves"); }
+        //            if (TileID.Sets.Mud[item.createTile]) { strings.Add("Mud"); }
+        //            if (TileID.Sets.NeedsGrassFraming[item.createTile]) { strings.Add("NeedsGrassFraming"); }
+        //            if (TileID.Sets.NotReallySolid[item.createTile]) { strings.Add("NotReallySolid"); }
+        //            if (TileID.Sets.Platforms[item.createTile]) { strings.Add("Platforms"); }
+        //            if (TileID.Sets.Snow[item.createTile]) { strings.Add("Snow"); }
+        //            if (TileID.Sets.Stone[item.createTile]) { strings.Add("Stone"); }
+        //            if (TileID.Sets.TeamTiles[item.createTile]) { strings.Add("TeamTiles"); }
+        //            if (TileID.Sets.TileInteractRead[item.createTile]) { strings.Add("TileInteractRead"); }
+        //            //if (TileID.Sets.TouchDamageHot[item.createTile]>0) { strings.Add("TouchDamageHot"); }
+        //            //if (TileID.Sets.TouchDamageOther[item.createTile]>0) { strings.Add("TouchDamageOther"); }
+        //            //if (TileID.Sets.TouchDamageSands[item.createTile] > 0) { strings.Add("TouchDamageSands"); }
+        //            //if (TileID.Sets.TouchDamageVines[item.createTile] > 0) { strings.Add("TouchDamageVines"); }
+        //            if (Array.IndexOf (TileID.Sets.RoomNeeds.CountsAsChair,item.createTile)>=0) { strings.Add("CountsAsChair"); }
+        //            //if (TileID.Sets.RoomNeeds.CountsAsDoor[item.createTile] > 0) { strings.Add("CountsAsDoor"); }
+        //            //if (TileID.Sets.RoomNeeds.CountsAsTable[item.createTile] > 0) { strings.Add("CountsAsTable"); }
+        //            //if (TileID.Sets.RoomNeeds.CountsAsTorch[item.createTile] > 0) { strings.Add("CountsAsTorch"); }
+
+        //        }
+
+
+        //        foreach (var str in strings)
+        //        {
+        //            var line = new TooltipLine(mod, mod.Name, str);
+        //            line.overrideColor = Colors.RarityBlue;
+        //            tooltips.Add(line);
+        //        }
                 
-            }
-        }
+        //    }
+        //}
 
         private void AddTranslations()
 		{
@@ -293,8 +336,16 @@ namespace MagicStorage
             text.SetDefault("Materials");
             AddTranslation(text);
 
+            text = CreateTranslation("FilterBlock");
+            text.SetDefault("Blocks, Bricks & Walls");
+            AddTranslation(text);
+
             text = CreateTranslation("FilterOre");
             text.SetDefault("Ores and Bars");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterRoomNeeds");
+            text.SetDefault("NPC Room Furniture");
             AddTranslation(text);
 
             text = CreateTranslation("FilterStatue");
@@ -306,7 +357,7 @@ namespace MagicStorage
             AddTranslation(text);
 
             text = CreateTranslation("FilterCrate");
-            text.SetDefault("Crates");
+            text.SetDefault("Crates & Chests");
             AddTranslation(text);
 
             text = CreateTranslation("FilterOtherPlaceables");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 
 namespace MagicStorage.Sorting
 {
@@ -254,7 +255,7 @@ namespace MagicStorage.Sorting
 	{
 		public override bool Passes(Item item)
 		{
-			return item.createTile >= 0 || item.createWall > 0 && (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
+			return item.createTile >= 0 || item.createWall > 0 || (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
 		}
 	}
 
@@ -267,12 +268,26 @@ namespace MagicStorage.Sorting
         }
     }
 
+    public class FilterBlock : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && (item.Name.Contains("Block") || item.Name.Contains("Brick") || item.createWall > 0);
+        }
+    }
+
     public class FilterOre : ItemFilter
     {
         public override bool Passes(Item item)
         {
             ItemFilter placeable = new FilterPlaceable();
-            return placeable.Passes(item) && (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
+            bool ct = false;
+            if (item.createTile != -1)
+            {
+                ct = TileID.Sets.Ore[item.createTile];
+            }
+                return placeable.Passes(item) && (item.Name.Contains(" Bar") || ct);
         }
     }
 
@@ -299,14 +314,34 @@ namespace MagicStorage.Sorting
         public override bool Passes(Item item)
         {
             ItemFilter placeable = new FilterPlaceable();
-            return placeable.Passes(item) && (item.Name.Contains("Crate"));
+            bool ct = false;
+            if (item.createTile != -1)
+            {
+                ct = TileID.Sets.BasicChest[item.createTile];
+            }
+            return placeable.Passes(item) && (item.Name.Contains("Crate") || (ct));
+        }
+    }
+
+    public class FilterRoomNeeds : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            bool rn = false;
+            if (Array.IndexOf(TileID.Sets.RoomNeeds.CountsAsChair, item.createTile) >= 0) { rn = true; }
+            if (Array.IndexOf(TileID.Sets.RoomNeeds.CountsAsDoor, item.createTile) >= 0) { rn = true; }
+            if (Array.IndexOf(TileID.Sets.RoomNeeds.CountsAsTable, item.createTile) >= 0) { rn = true; }
+            if (Array.IndexOf(TileID.Sets.RoomNeeds.CountsAsTorch, item.createTile) >= 0) { rn = true; }
+            return placeable.Passes(item) && rn;
         }
     }
 
     public class FilterOtherPlaceable : ItemFilter
     {
         private static List<ItemFilter> blacklist = new List<ItemFilter> {
-            new FilterMaterial(),
+            new FilterRoomNeeds(),
+            new FilterBlock(),
             new FilterOre(),
             new FilterStatue(),
             new FilterBanner(),

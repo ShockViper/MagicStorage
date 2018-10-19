@@ -73,7 +73,7 @@ namespace MagicStorage.Sorting
 			return sortedTree.GetSortedItems();
 		}
 
-		public static IEnumerable<Recipe> GetRecipes(SortMode sortMode, FilterMode filterMode, string modFilter, string nameFilter)
+		public static IEnumerable<Recipe> GetRecipes(SortMode sortMode, FilterMode filterMode, SubFilterMode subFilterMode, string modFilter, string nameFilter)
 		{
 			ItemFilter filter;
 			switch (filterMode)
@@ -81,22 +81,22 @@ namespace MagicStorage.Sorting
 			case FilterMode.All:
 				filter = new FilterAll();
 				break;
-			case FilterMode.Weapons:
-				filter = new FilterWeapon();
-				break;
-			case FilterMode.Tools:
-				filter = new FilterTool();
-				break;
-			case FilterMode.Equipment:
-				filter = new FilterEquipment();
-				break;
-			case FilterMode.Potions:
-				filter = new FilterPotion();
-				break;
-			case FilterMode.Placeables:
-				filter = new FilterPlaceable();
-				break;
-			case FilterMode.Misc:
+                case FilterMode.Weapons:
+                    filter = GetWeaponFilter(subFilterMode);
+                    break;
+                case FilterMode.Tools:
+                    filter = GetToolFilter(subFilterMode);
+                    break;
+                case FilterMode.Equipment:
+                    filter = GetEquipmentFilter(subFilterMode);
+                    break;
+                case FilterMode.Potions:
+                    filter = GetPotionFilter(subFilterMode);
+                    break;
+                case FilterMode.Placeables:
+                    filter = GetPlaceableFilter(subFilterMode);
+                    break;
+                case FilterMode.Misc:
 				filter = new FilterMisc();
 				break;
 			default:
@@ -262,8 +262,14 @@ namespace MagicStorage.Sorting
                 case SubFilterMode.Material:
                     filter = new FilterMaterial();
                     break;
+                case SubFilterMode.Block:
+                    filter = new FilterBlock();
+                    break;
                 case SubFilterMode.Ore:
                     filter = new FilterOre();
+                    break;
+                case SubFilterMode.RoomNeeds:
+                    filter = new FilterRoomNeeds();
                     break;
                 case SubFilterMode.Statue:
                     filter = new FilterStatue();
