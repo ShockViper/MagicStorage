@@ -122,7 +122,7 @@ namespace MagicStorage.Sorting
 	{
 		public override bool Passes(Item item)
 		{
-			return item.headSlot >= 0 || item.bodySlot >= 0 || item.legSlot >= 0 || item.accessory || Main.projHook[item.shoot] || item.mountType >= 0 || (item.buffType > 0 && (Main.lightPet[item.buffType] || Main.vanityPet[item.buffType]));
+			return item.headSlot >= 0 || item.bodySlot >= 0 || item.legSlot >= 0 || item.accessory || Main.projHook[item.shoot] || item.mountType >= 0 || item.dye > 0 || item.hairDye >= 0 || (item.buffType > 0 && (Main.lightPet[item.buffType] || Main.vanityPet[item.buffType]));
 		}
 	}
 
@@ -194,19 +194,145 @@ namespace MagicStorage.Sorting
 	{
 		public override bool Passes(Item item)
 		{
-			return item.consumable && (item.healLife > 0 || item.healMana > 0 || item.buffType > 0);
-		}
+			return item.consumable && item.useStyle == 2;
+        }
 	}
 
-	public class FilterPlaceable : ItemFilter
+    public class FilterRecovery : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.consumable && (item.healLife > 0 || item.healMana > 0);
+        }
+    }
+
+    public class FilterFood : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.consumable && (item.buffType == 25 || item.buffType == 26);
+        }
+    }
+
+    public class FilterBuff : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            return item.consumable && ((item.buffType > 0 && item.buffType <25) || (item.buffType > 26));
+        }
+    }
+
+    public class FilterOtherPotion : ItemFilter
+    {
+        private static List<ItemFilter> blacklist = new List<ItemFilter> {
+            new FilterRecovery(),
+            new FilterBuff(),
+            new FilterFood()
+        };
+        private static bool result;
+        public override bool Passes(Item item)
+        {
+            ItemFilter pots = new FilterPotion();
+            result = false;
+            if (pots.Passes(item))
+            {
+                result = true;
+                foreach (var filter in blacklist)
+                {
+                    if (filter.Passes(item))
+                    {
+                        result= false;
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+
+    public class FilterPlaceable : ItemFilter
 	{
 		public override bool Passes(Item item)
 		{
-			return item.createTile >= 0 || item.createWall > 0;
+			return item.createTile >= 0 || item.createWall > 0 && (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
 		}
 	}
 
-	public class FilterMisc : ItemFilter
+    public class FilterMaterial : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && item.material;
+        }
+    }
+
+    public class FilterOre : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
+        }
+    }
+
+    public class FilterStatue : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && (item.Name.Contains("Statue"));
+        }
+    }
+
+    public class FilterBanner : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && (item.Name.Contains("Banner"));
+        }
+    }
+
+    public class FilterCrate : ItemFilter
+    {
+        public override bool Passes(Item item)
+        {
+            ItemFilter placeable = new FilterPlaceable();
+            return placeable.Passes(item) && (item.Name.Contains("Crate"));
+        }
+    }
+
+    public class FilterOtherPlaceable : ItemFilter
+    {
+        private static List<ItemFilter> blacklist = new List<ItemFilter> {
+            new FilterMaterial(),
+            new FilterOre(),
+            new FilterStatue(),
+            new FilterBanner(),
+            new FilterCrate()
+        };
+        private static bool result;
+        public override bool Passes(Item item)
+        {
+            ItemFilter plac = new FilterPlaceable();
+            result = false;
+            if (plac.Passes(item))
+            {
+                result = true;
+                foreach (var filter in blacklist)
+                {
+                    if (filter.Passes(item))
+                    {
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+    public class FilterMisc : ItemFilter
 	{
 		private static List<ItemFilter> blacklist = new List<ItemFilter> {
 			new FilterWeapon(),

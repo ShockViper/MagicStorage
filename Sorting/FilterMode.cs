@@ -30,6 +30,16 @@ namespace MagicStorage.Sorting
         Mount = 4,
         Pet = 5,
         Dye = 6,
-        Vanity = 7
+        Vanity = 7,
+        Recovery=1,
+        Food=2,
+        Buff=3,
+        OtherPotions=4,
+        Material=1,
+        Ore=2,
+        Statue=3,
+        Banner=4,
+        Crate=5,
+        OtherPlaceables
     }
 }

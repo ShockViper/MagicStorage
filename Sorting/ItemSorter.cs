@@ -25,11 +25,11 @@ namespace MagicStorage.Sorting
 				filter = GetEquipmentFilter(subFilterMode);
 				break;
 			case FilterMode.Potions:
-				filter = new FilterPotion();
+				filter = GetPotionFilter(subFilterMode);
 				break;
 			case FilterMode.Placeables:
-				filter = new FilterPlaceable();
-				break;
+				filter = GetPlaceableFilter(subFilterMode);
+                    break;
 			case FilterMode.Misc:
 				filter = new FilterMisc();
 				break;
@@ -224,6 +224,65 @@ namespace MagicStorage.Sorting
             return filter;
         }
 
+        private static ItemFilter GetPotionFilter(SubFilterMode subFilterMode)
+        {
+            ItemFilter filter;
+            switch (subFilterMode)
+            {
+                case SubFilterMode.All:
+                    filter = new FilterPotion();
+                    break;
+                case SubFilterMode.Recovery:
+                    filter = new FilterRecovery();
+                    break;
+                case SubFilterMode.Food:
+                    filter = new FilterFood();
+                    break;
+                case SubFilterMode.Buff:
+                    filter = new FilterBuff();
+                    break;
+                case SubFilterMode.OtherPotions:
+                    filter = new FilterOtherPotion();
+                    break;
+                default:
+                    filter = new FilterPotion();
+                    break;
+            }
+            return filter;
+        }
+
+        private static ItemFilter GetPlaceableFilter(SubFilterMode subFilterMode)
+        {
+            ItemFilter filter;
+            switch (subFilterMode)
+            {
+                case SubFilterMode.All:
+                    filter = new FilterPlaceable();
+                    break;
+                case SubFilterMode.Material:
+                    filter = new FilterMaterial();
+                    break;
+                case SubFilterMode.Ore:
+                    filter = new FilterOre();
+                    break;
+                case SubFilterMode.Statue:
+                    filter = new FilterStatue();
+                    break;
+                case SubFilterMode.Banner:
+                    filter = new FilterBanner();
+                    break;
+                case SubFilterMode.Crate:
+                    filter = new FilterCrate();
+                    break;
+                case SubFilterMode.OtherPlaceables:
+                    filter = new FilterOtherPlaceable();
+                    break;
+                default:
+                    filter = new FilterPlaceable();
+                    break;
+            }
+            return filter;
+        }
 
         private static bool FilterName(Item item, string modFilter, string filter)
 		{

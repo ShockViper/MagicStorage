@@ -40,7 +40,58 @@ namespace MagicStorage
 			CraftingGUI.Unload();
 		}
 
-		private void AddTranslations()
+        public class ItemTooltips : GlobalItem
+        {
+            private static List<string> strings = new List<string> { };
+            public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+            {
+                var modLoaderMod = ModLoader.GetMod("ModLoader");
+                if (item.modItem != null && !item.Name.Contains("[" + item.modItem.mod.Name + "]") && !item.Name.Contains("[" + item.modItem.mod.DisplayName + "]"))
+                {
+                    string text = (item.modItem.mod.Name + ":" + item.modItem.Name);
+                    var line1 = new TooltipLine(mod, mod.Name, "[" + text + "]");
+                    line1.overrideColor = Colors.RarityBlue;
+                    tooltips.Add(line1);
+                }
+                strings.Clear();
+                //strings.Add("life:" + item.healLife);
+                //strings.Add("mana:" + item.healMana);
+                strings.Add("manaincrease:" + item.manaIncrease);
+                //strings.Add("magic:" + item.magic);
+                strings.Add("material:" + item.material);
+                strings.Add("placestyle:" + item.placeStyle);
+                //strings.Add("type:" + item.type);
+                strings.Add("bufftype:" + item.buffType);
+                //strings.Add("potion:" + item.potion);
+                strings.Add("consumable:" + item.consumable);
+                strings.Add("Affixname:" + item.AffixName());
+                strings.Add("ammo:" + item.ammo);
+                strings.Add("checkmat:" + item.checkMat());
+                strings.Add("DD2Summon:" + item.DD2Summon);
+                strings.Add("makeNPC:" + item.makeNPC);
+                strings.Add("sentry:" + item.sentry);
+                strings.Add("createTile:" + item.createTile);
+                strings.Add("createwall:" + item.createWall);
+                strings.Add("bossSpawn:" + ItemID.Sets.SortingPriorityBossSpawns[item.type]);
+                strings.Add("extractibles:" + ItemID.Sets.SortingPriorityExtractibles[item.type]);
+                strings.Add("IsAMaterial:" + ItemID.Sets.IsAMaterial[item.type]);
+                strings.Add("materials:" + ItemID.Sets.SortingPriorityMaterials[item.type]);
+                strings.Add("painting:" + ItemID.Sets.SortingPriorityPainting[item.type]);
+                strings.Add("terraforming:" + ItemID.Sets.SortingPriorityTerraforming[item.type]);
+                strings.Add("wiring:" + ItemID.Sets.SortingPriorityWiring[item.type]);
+                strings.Add("ropes:" + ItemID.Sets.SortingPriorityRopes[item.type]);
+                strings.Add("Animate as Soul:" + ItemID.Sets.AnimatesAsSoul[item.type]);
+                foreach (var str in strings)
+                {
+                    var line = new TooltipLine(mod, mod.Name, str);
+                    line.overrideColor = Colors.RarityOrange;
+                    tooltips.Add(line);
+                }
+                
+            }
+        }
+
+        private void AddTranslations()
 		{
 			ModTranslation text = CreateTranslation("SetTo");
 			text.SetDefault("Set to: X={0}, Y={1}");
@@ -215,14 +266,54 @@ namespace MagicStorage
 			text.AddTranslation(GameCulture.Spanish, "Filtrar por poción");
 			AddTranslation(text);
 
-			text = CreateTranslation("FilterTiles");
+            text = CreateTranslation("FilterRecovery");
+            text.SetDefault("Recovery Potions");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterFood");
+            text.SetDefault("Food");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterBuff");
+            text.SetDefault("Buff Items");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterOtherPotions");
+            text.SetDefault("Other Potions");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterTiles");
 			text.SetDefault("Filter Placeables");
 			text.AddTranslation(GameCulture.Russian, "Фильтр (Размещаемое)");
 			text.AddTranslation(GameCulture.French, "Filtrer par placeable");
 			text.AddTranslation(GameCulture.Spanish, "Filtrar por metido");
 			AddTranslation(text);
 
-			text = CreateTranslation("FilterMisc");
+            text = CreateTranslation("FilterMaterial");
+            text.SetDefault("Materials");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterOre");
+            text.SetDefault("Ores and Bars");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterStatue");
+            text.SetDefault("Statues");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterBanner");
+            text.SetDefault("Banners");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterCrate");
+            text.SetDefault("Crates");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterOtherPlaceables");
+            text.SetDefault("Other Placeables");
+            AddTranslation(text);
+
+            text = CreateTranslation("FilterMisc");
 			text.SetDefault("Filter Misc");
 			text.AddTranslation(GameCulture.Russian, "Фильтр (Разное)");
 			text.AddTranslation(GameCulture.French, "Filtrer par miscellanées");

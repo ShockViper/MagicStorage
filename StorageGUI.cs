@@ -347,6 +347,47 @@ namespace MagicStorage
                             Language.GetText("Mods.MagicStorage.FilterVanity"),
                          });
                         break;
+                    case FilterMode.Potions:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterRecovery"),
+                            MagicStorage.Instance.GetTexture("FilterFood"),
+                            MagicStorage.Instance.GetTexture("FilterBuff"),
+                            MagicStorage.Instance.GetTexture("FilterOtherPotions"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterRecovery"),
+                            Language.GetText("Mods.MagicStorage.FilterFood"),
+                            Language.GetText("Mods.MagicStorage.FilterBuff"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherPotions"),
+                         });
+                        break;
+
+                    case FilterMode.Placeables:
+                        subFilterButtons = new UIButtonChoice(new Texture2D[]
+                         {
+                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("FilterMaterial"),
+                            MagicStorage.Instance.GetTexture("FilterOre"),
+                            MagicStorage.Instance.GetTexture("FilterStatue"),
+                            MagicStorage.Instance.GetTexture("FilterBanner"),
+                            MagicStorage.Instance.GetTexture("FilterCrate"),
+                            MagicStorage.Instance.GetTexture("FilterOtherPlaceables"),
+                        },
+                        new LocalizedText[]
+                        {
+                            Language.GetText("Mods.MagicStorage.FilterAll"),
+                            Language.GetText("Mods.MagicStorage.FilterMaterial"),
+                            Language.GetText("Mods.MagicStorage.FilterOre"),
+                            Language.GetText("Mods.MagicStorage.FilterStatue"),
+                            Language.GetText("Mods.MagicStorage.FilterBanner"),
+                            Language.GetText("Mods.MagicStorage.FilterCrate"),
+                            Language.GetText("Mods.MagicStorage.FilterOtherPlaceables"),
+                         });
+                        break;
 
                     default:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]

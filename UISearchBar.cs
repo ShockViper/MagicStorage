@@ -85,8 +85,9 @@ namespace MagicStorage
 				}
 				else if (StorageGUI.curMouse.RightButton == ButtonState.Pressed && StorageGUI.oldMouse.RightButton == ButtonState.Released && mouseOver)
 				{
-					text = string.Empty;
+                    text = string.Empty;
 					cursorPosition = 0;
+                    StorageGUI.RefreshItems();
 				}
 			}
 
