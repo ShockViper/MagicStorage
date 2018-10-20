@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
-using MagicStorage.Components;
 
 namespace MagicStorage
 {

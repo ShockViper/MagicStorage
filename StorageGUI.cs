@@ -212,9 +212,9 @@ namespace MagicStorage
 				sortButtons = new UIButtonChoice(new Texture2D[]
 				{
 					Main.inventorySortTexture[0],
-					MagicStorage.Instance.GetTexture("SortID"),
-					MagicStorage.Instance.GetTexture("SortName"),
-					MagicStorage.Instance.GetTexture("SortNumber")
+					MagicStorage.Instance.GetTexture("Icons/SortID"),
+					MagicStorage.Instance.GetTexture("Icons/SortName"),
+					MagicStorage.Instance.GetTexture("Icons/SortNumber")
 				},
 				new LocalizedText[]
 				{
@@ -232,13 +232,13 @@ namespace MagicStorage
 			{
 				filterButtons = new UIButtonChoice(new Texture2D[]
 				{
-					MagicStorage.Instance.GetTexture("FilterAll"),
-					MagicStorage.Instance.GetTexture("FilterMelee"),
-					MagicStorage.Instance.GetTexture("FilterPickaxe"),
-					MagicStorage.Instance.GetTexture("FilterArmor"),
-					MagicStorage.Instance.GetTexture("FilterPotion"),
-					MagicStorage.Instance.GetTexture("FilterTile"),
-					MagicStorage.Instance.GetTexture("FilterMisc"),
+					MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+					MagicStorage.Instance.GetTexture("Icons/FilterMelee"),
+					MagicStorage.Instance.GetTexture("Icons/FilterPickaxe"),
+					MagicStorage.Instance.GetTexture("Icons/FilterArmor"),
+					MagicStorage.Instance.GetTexture("Icons/FilterPotion"),
+					MagicStorage.Instance.GetTexture("Icons/FilterTile"),
+					MagicStorage.Instance.GetTexture("Icons/FilterMisc"),
 				},
 				new LocalizedText[]
 				{
@@ -259,7 +259,7 @@ namespace MagicStorage
             {
                 subFilterButtons = new UIButtonChoice(new Texture2D[]
                 {
-                    MagicStorage.Instance.GetTexture("FilterAll"),
+                    MagicStorage.Instance.GetTexture("Icons/FilterAll"),
                 },
                 new LocalizedText[]
                 {
@@ -278,7 +278,7 @@ namespace MagicStorage
                     case FilterMode.All:
                         subFilterButtons.UpdateButtons(new Texture2D[]
                         {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
                         },
                         new LocalizedText[]
                         {
@@ -288,13 +288,13 @@ namespace MagicStorage
                     case FilterMode.Weapons:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterMelee"),
-                            MagicStorage.Instance.GetTexture("FilterRanged"),
-                            MagicStorage.Instance.GetTexture("FilterMagic"),
-                            MagicStorage.Instance.GetTexture("FilterSummon"),
-                            MagicStorage.Instance.GetTexture("FilterThrowing"),
-                            MagicStorage.Instance.GetTexture("FilterOtherWeapon"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterMelee"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterRanged"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterMagic"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterSummon"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterThrowing"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterOtherWeapon"),
                         },
                         new LocalizedText[]
                         {
@@ -310,10 +310,10 @@ namespace MagicStorage
                     case FilterMode.Tools:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterAxe"),
-                            MagicStorage.Instance.GetTexture("FilterHammer"),
-                            MagicStorage.Instance.GetTexture("FilterPickaxe"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAxe"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterHammer"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterPickaxe"),
                         },
                         new LocalizedText[]
                         {
@@ -326,14 +326,14 @@ namespace MagicStorage
                     case FilterMode.Equipment:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterArmor"),
-                            MagicStorage.Instance.GetTexture("FilterAccessory"),
-                            MagicStorage.Instance.GetTexture("FilterGrapple"),
-                            MagicStorage.Instance.GetTexture("FilterMount"),
-                            MagicStorage.Instance.GetTexture("FilterPet"),
-                            MagicStorage.Instance.GetTexture("FilterDye"),
-                            MagicStorage.Instance.GetTexture("FilterVanity"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterArmor"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAccessory"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterGrapple"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterMount"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterPet"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterDye"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterVanity"),
                         },
                         new LocalizedText[]
                         {
@@ -350,11 +350,11 @@ namespace MagicStorage
                     case FilterMode.Potions:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterRecovery"),
-                            MagicStorage.Instance.GetTexture("FilterFood"),
-                            MagicStorage.Instance.GetTexture("FilterBuff"),
-                            MagicStorage.Instance.GetTexture("FilterOtherPotions"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterRecovery"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterFood"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterBuff"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterOtherPotions"),
                         },
                         new LocalizedText[]
                         {
@@ -369,15 +369,15 @@ namespace MagicStorage
                     case FilterMode.Placeables:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                          {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
-                            MagicStorage.Instance.GetTexture("FilterTile"),
-                            MagicStorage.Instance.GetTexture("FilterOre"),
-                            MagicStorage.Instance.GetTexture("FilterRoomNeeds"),
-                            MagicStorage.Instance.GetTexture("FilterStatue"),
-                            MagicStorage.Instance.GetTexture("FilterBanner"),
-                            MagicStorage.Instance.GetTexture("FilterCrate"),
-                            MagicStorage.Instance.GetTexture("FilterMaterial"),
-                            MagicStorage.Instance.GetTexture("FilterOtherPlaceables"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterTile"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterOre"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterRoomNeeds"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterStatue"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterBanner"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterCrate"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterMaterial"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterOtherPlaceables"),
                         },
                         new LocalizedText[]
                         {
@@ -396,7 +396,7 @@ namespace MagicStorage
                     default:
                         subFilterButtons = new UIButtonChoice(new Texture2D[]
                         {
-                            MagicStorage.Instance.GetTexture("FilterAll"),
+                            MagicStorage.Instance.GetTexture("Icons/FilterAll"),
                         },
                         new LocalizedText[]
                         {
