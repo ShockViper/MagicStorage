@@ -508,6 +508,24 @@ namespace MagicStorage
 			return modPlayer.GetStorageHeart();
 		}
 
+        public static int ItemCount(string itemName)
+        {
+            int count = 0;
+            List<Item> countList = new List<Item>();
+            TEStorageHeart heart = GetHeart();
+            if (heart == null)
+            {
+                return -1;
+            }
+            countList.Clear();
+            countList.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), SortMode.Default, FilterMode.All, SubFilterMode.All, "", ""));
+            foreach (Item sItem in countList)
+            {
+                if (sItem.Name == itemName) { count+=sItem.stack; }
+            }
+            return count;
+        }
+
 		public static void RefreshItems()
 		{
 			if (StoragePlayer.IsStorageCrafting())
