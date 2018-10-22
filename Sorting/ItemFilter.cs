@@ -255,7 +255,7 @@ namespace MagicStorage.Sorting
 	{
 		public override bool Passes(Item item)
 		{
-			return item.createTile >= 0 || item.createWall > 0 || (item.Name.Contains("Bar") || item.Name.Contains("Ore"));
+			return item.createTile >= 0 || item.createWall > 0 || (MagicStorage.ContainsExactMatch(item.Name,"Bar") || MagicStorage.ContainsExactMatch(item.Name,"Ore"));
 		}
 	}
 
@@ -273,7 +273,7 @@ namespace MagicStorage.Sorting
         public override bool Passes(Item item)
         {
             ItemFilter placeable = new FilterPlaceable();
-            return placeable.Passes(item) && (item.Name.Contains("Block") || item.Name.Contains("Brick") || item.createWall > 0);
+            return placeable.Passes(item) && (MagicStorage.ContainsExactMatch(item.Name,"Block") || MagicStorage.ContainsExactMatch(item.Name,"Brick") || item.createWall > 0);
         }
     }
 
@@ -287,7 +287,7 @@ namespace MagicStorage.Sorting
             {
                 ct = TileID.Sets.Ore[item.createTile];
             }
-                return placeable.Passes(item) && (item.Name.Contains(" Bar") || ct);
+                return placeable.Passes(item) && (MagicStorage.ContainsExactMatch(item.Name,"Bar") || ct);
         }
     }
 
@@ -296,7 +296,7 @@ namespace MagicStorage.Sorting
         public override bool Passes(Item item)
         {
             ItemFilter placeable = new FilterPlaceable();
-            return placeable.Passes(item) && (item.Name.Contains("Statue"));
+            return placeable.Passes(item) && (MagicStorage.ContainsExactMatch(item.Name,"Statue"));
         }
     }
 
@@ -305,7 +305,7 @@ namespace MagicStorage.Sorting
         public override bool Passes(Item item)
         {
             ItemFilter placeable = new FilterPlaceable();
-            return placeable.Passes(item) && (item.Name.Contains("Banner"));
+            return placeable.Passes(item) && (MagicStorage.ContainsExactMatch(item.Name,"Banner"));
         }
     }
 
@@ -319,7 +319,7 @@ namespace MagicStorage.Sorting
             {
                 ct = TileID.Sets.BasicChest[item.createTile];
             }
-            return placeable.Passes(item) && (item.Name.Contains("Crate") || (ct));
+            return placeable.Passes(item) && (MagicStorage.ContainsExactMatch(item.Name,"Crate") || (ct));
         }
     }
 

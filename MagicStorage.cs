@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using System.Text.RegularExpressions;
 
 namespace MagicStorage
 {
@@ -23,7 +24,7 @@ namespace MagicStorage
                 line1.overrideColor = Colors.RarityBlue;
                 tooltips.Add(line1);
             }
-            int itemCount = StorageGUI.ItemCount(item.Name);
+            int itemCount = StorageGUI.ItemCount(item.type);
             if (itemCount >= 0)
             {
                 var itemCountTip = new TooltipLine(mod, mod.Name, "In storage:"+itemCount);
@@ -65,6 +66,13 @@ namespace MagicStorage
 			CraftingGUI.Unload();
 		}
 
+        public static bool ContainsExactMatch(string input, string match)
+
+        {
+
+            return Regex.IsMatch(input, string.Format(@"\b{0}\b", Regex.Escape(match)));
+
+        }
         private void AddTranslations()
 		{
 			ModTranslation text = CreateTranslation("SetTo");

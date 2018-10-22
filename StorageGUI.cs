@@ -508,7 +508,7 @@ namespace MagicStorage
 			return modPlayer.GetStorageHeart();
 		}
 
-        public static int ItemCount(string itemName)
+        public static int ItemCount(int itemType)
         {
             int count = 0;
             List<Item> countList = new List<Item>();
@@ -521,7 +521,7 @@ namespace MagicStorage
             countList.AddRange(ItemSorter.SortAndFilter(heart.GetStoredItems(), SortMode.Default, FilterMode.All, SubFilterMode.All, "", ""));
             foreach (Item sItem in countList)
             {
-                if (sItem.Name == itemName) { count+=sItem.stack; }
+                if (sItem.type == itemType) { count+=sItem.stack; }
             }
             return count;
         }
